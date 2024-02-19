@@ -39,10 +39,10 @@ export default function ProductItem() {
           />
         </div>
       ) : (
-        <div className="row gy-5">
+        <div  className="row gy-5">
           {products.map((product) => (
-            <Link to={"/productDetails"}>
-              <div className="col-md-2">
+            <div key={product.id} className="col-md-2">
+              <Link to={`/productDetails/${product.id}`}>
                 <div className="product p-2">
                   <img
                     src={product.imageCover}
@@ -66,8 +66,8 @@ export default function ProductItem() {
                     Add To Cart
                   </button>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       )}

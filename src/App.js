@@ -11,6 +11,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./Context/UserContext/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
 
 function App() {
   let routers = createBrowserRouter([
@@ -23,6 +24,7 @@ function App() {
         { path: "products", element:  <ProtectedRoute> <Products/> </ProtectedRoute> },
         { path: "categories", element:  <ProtectedRoute> <Categories/> </ProtectedRoute> },
         { path: "brands", element:  <ProtectedRoute> <Brands/> </ProtectedRoute> },
+        { path: "productDetails/:id", element:  <ProtectedRoute> <ProductDetails/> </ProtectedRoute> },
         { path: "home", element: <ProtectedRoute> <Home/> </ProtectedRoute> },
         { path: "register", element: <Register /> },
       ],
