@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Circles } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { UserContext } from "../../Context/UserContext/UserContext";
+// import { UserContext } from "../../Context/UserContext/UserContext";
 
 export default function Signin() {
   // State For Loading
@@ -14,6 +16,9 @@ export default function Signin() {
 
   // Use Navigate To Go To Sign In Page After Registeration
   let navigate = useNavigate();
+
+  // Use User Context
+  let { setUserToken } = useContext(UserContext);
 
   // Submit Form
   async function registerSubmit(values) {
@@ -26,7 +31,9 @@ export default function Signin() {
       });
     if (data.message == "success") {
       setLoading(false);
-      navigate("/");
+      localStorage.setItem("userToken", data.token);
+      setUserToken(data.token);
+      navigate("/home");
     }
   }
 
@@ -115,7 +122,9 @@ export default function Signin() {
               Sign In
             </button>
           )}
-          <Link className="ps-3" to={"/register"}>Register Now</Link>
+          <Link className="ps-3" to={"/register"}>
+            Register Now
+          </Link>
         </form>
       </div>
     </>

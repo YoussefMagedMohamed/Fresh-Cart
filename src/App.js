@@ -7,8 +7,10 @@ import Layout from "./Components/Layout/Layout";
 import Brands from "./Components/Brands/Brands";
 import Signin from "./Components/Signin/Signin";
 import Register from "./Components/Register/Register";
-import Signout from "./Components/Signout/Signout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { UserContext } from "./Context/UserContext/UserContext";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   let routers = createBrowserRouter([
@@ -17,16 +19,24 @@ function App() {
       element: <Layout />,
       children: [
         { index: true, element: <Signin /> },
-        { path: "cart", element: <Cart /> },
-        { path: "products", element: <Products /> },
-        { path: "categories", element: <Categories /> },
-        { path: "brands", element: <Brands /> },
-        { path: "home", element: <Home /> },
+        { path: "cart", element: <ProtectedRoute> <Cart/> </ProtectedRoute> },
+        { path: "products", element:  <ProtectedRoute> <Products/> </ProtectedRoute> },
+        { path: "categories", element:  <ProtectedRoute> <Categories/> </ProtectedRoute> },
+        { path: "brands", element:  <ProtectedRoute> <Brands/> </ProtectedRoute> },
+        { path: "home", element: <ProtectedRoute> <Home/> </ProtectedRoute> },
         { path: "register", element: <Register /> },
-        { path: "signout", element: <Signout /> },
       ],
     },
   ]);
+
+  // Handle User Refresh
+  let { setUserToken } = useContext(UserContext);
+  useEffect(() => {
+    if (localStorage.getItem("userToken")) {
+      setUserToken(localStorage.getItem("userToken"));
+    }
+  }, []);
+
   return (
     <>
       <RouterProvider router={routers}></RouterProvider>

@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../Assets/images/freshcart-logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext/UserContext";
 
 export default function Navbar() {
+  // Use User Context
+  let { userToken, setUserToken } = useContext(UserContext);
+
+  // Call Use Navigate
+  let navigate = useNavigate();
+
+  // User Logout
+  function logout() {
+    // Remove Token From Local Storage
+    localStorage.removeItem("userToken");
+
+    // Remove Token From State OF User Token
+    setUserToken(null);
+
+    // Navigate To Sign In Page
+    navigate("/");
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -22,33 +41,41 @@ export default function Navbar() {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to={"home"}>
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"cart"}>
-                  Cart
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"products"}>
-                  Products
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"categories"}>
-                  Categories
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"brands"}>
-                  Brands
-                </Link>
-              </li>
-            </ul>
+            <>
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                {userToken ? (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"home"}>
+                        Home
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"cart"}>
+                        Cart
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"products"}>
+                        Products
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"categories"}>
+                        Categories
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"brands"}>
+                        Brands
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  ""
+                )}
+              </ul>
+            </>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link" to={"/"}>
@@ -80,23 +107,28 @@ export default function Navbar() {
                   <i className="fab fa-youtube"></i>
                 </Link>
               </li>
-              <div className="d-flex">
-                <li className="nav-item">
-                  <Link className="nav-link" to={"signin"}>
-                    Sign In
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"register"}>
-                    Register
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"signout"}>
-                    Sign Out
-                  </Link>
-                </li>
-              </div>
+              {userToken ? (
+                <>
+                  <li className="nav-item">
+                    <button className="nav-link" onClick={logout}>
+                      Sign Out
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/"}>
+                      Sign In
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"register"}>
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

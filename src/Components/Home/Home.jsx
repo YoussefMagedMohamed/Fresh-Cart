@@ -1,7 +1,11 @@
-import React from 'react'
+import ProductItem from "../ProductItem/ProductItem";
 
 export default function Home() {
-  return <>
-    <h1>Home</h1>
-  </>
+  return (
+    <>
+      <div className="w-100">
+        <ProductItem />
+      </div>
+    </>
+  );
 }

@@ -190,7 +190,9 @@ export default function Register() {
               Register
             </button>
           )}
-          <Link className="ps-3" to={"/signin"}>Sign In Now</Link>
+          <Link className="ps-3" to={"/signin"}>
+            Sign In Now
+          </Link>
         </form>
       </div>
     </>
