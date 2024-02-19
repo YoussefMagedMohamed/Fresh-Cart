@@ -41,7 +41,7 @@ export default function ProductItem() {
       ) : (
         <div  className="row gy-5">
           {products.map((product) => (
-            <div key={product.id} className="col-md-2">
+            <div key={product.id} className="col-md-3 col-sm-4 col-xs-6 col-lg-2">
               <Link to={`/productDetails/${product.id}`}>
                 <div className="product p-2">
                   <img
