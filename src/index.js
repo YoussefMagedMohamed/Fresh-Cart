@@ -9,12 +9,20 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserContextProvider from "./Context/UserContext/UserContext";
+import { QueryClient, QueryClientProvider } from "react-query";
+import CartContextProvider from "./Context/CartContext/CartContext";
+
+let queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <UserContextProvider>
-    <App />
-  </UserContextProvider>
+  <CartContextProvider>
+    <UserContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </UserContextProvider>
+  </CartContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

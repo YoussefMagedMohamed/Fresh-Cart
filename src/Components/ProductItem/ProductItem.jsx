@@ -1,32 +1,34 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Bars } from "react-loader-spinner";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../Context/CartContext/CartContext";
+import toast from "react-hot-toast";
 
 export default function ProductItem() {
-  // Create State For Store And Use Data
-  const [products, setProducts] = useState([]);
+  // Use Add To Cart Context
+  let { addToCart } = useContext(CartContext);
 
-  // Create State For Loading
-  const [loading, setLoading] = useState(true);
-
-  // Create Function Get All Products
-  async function getAllProducts() {
-    let { data } = await axios.get(
-      `https://ecommerce.routemisr.com/api/v1/products`
-    );
-    setProducts(data.data);
-    setLoading(false);
+  async function postToCart(id) {
+    let { data } = await addToCart(id);
+    if (data.status == "success") {
+      toast.success("Added Successfully");
+    }
   }
 
-  // Call Get All Product Function
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+  // Create Function Get All Products
+  function getAllProducts() {
+    return axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
+  }
+
+  // Use useQuery Hook To manage Data
+  let { data, isLoading } = useQuery("allProduct", getAllProducts);
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <div className="row vh-100">
           <Bars
             height="100"
@@ -39,11 +41,14 @@ export default function ProductItem() {
           />
         </div>
       ) : (
-        <div  className="row gy-5">
-          {products.map((product) => (
-            <div key={product.id} className="col-md-3 col-sm-4 col-xs-6 col-lg-2">
-              <Link to={`/productDetails/${product.id}`}>
-                <div className="product p-2">
+        <div className="row gy-5">
+          {data.data.data.map((product) => (
+            <div
+              key={product.id}
+              className="col-md-3 col-sm-4 col-xs-6 col-lg-2"
+            >
+              <div className="product p-2">
+                <Link to={`/productDetails/${product.id}`}>
                   <img
                     src={product.imageCover}
                     className="w-100"
@@ -62,11 +67,14 @@ export default function ProductItem() {
                       {product.ratingsAverage}{" "}
                     </span>
                   </div>
-                  <button className="btn bg-main text-main-light w-100 btn-sm">
-                    Add To Cart
-                  </button>
-                </div>
-              </Link>
+                </Link>
+                <button
+                  onClick={() => postToCart(product.id)}
+                  className="btn bg-main text-main-light w-100 btn-sm"
+                >
+                  Add To Cart
+                </button>
+              </div>
             </div>
           ))}
         </div>

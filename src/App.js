@@ -12,6 +12,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "./Context/UserContext/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   let routers = createBrowserRouter([
@@ -20,12 +21,60 @@ function App() {
       element: <Layout />,
       children: [
         { index: true, element: <Signin /> },
-        { path: "cart", element: <ProtectedRoute> <Cart/> </ProtectedRoute> },
-        { path: "products", element:  <ProtectedRoute> <Products/> </ProtectedRoute> },
-        { path: "categories", element:  <ProtectedRoute> <Categories/> </ProtectedRoute> },
-        { path: "brands", element:  <ProtectedRoute> <Brands/> </ProtectedRoute> },
-        { path: "productDetails/:id", element:  <ProtectedRoute> <ProductDetails/> </ProtectedRoute> },
-        { path: "home", element: <ProtectedRoute> <Home/> </ProtectedRoute> },
+        {
+          path: "cart",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Cart />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "products",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Products />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "categories",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Categories />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "brands",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Brands />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "productDetails/:id",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <ProductDetails />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "home",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Home />{" "}
+            </ProtectedRoute>
+          ),
+        },
         { path: "register", element: <Register /> },
       ],
     },
@@ -42,6 +91,7 @@ function App() {
   return (
     <>
       <RouterProvider router={routers}></RouterProvider>
+      <Toaster />
     </>
   );
 }
