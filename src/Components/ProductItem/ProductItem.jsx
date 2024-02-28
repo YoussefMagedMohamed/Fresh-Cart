@@ -70,7 +70,7 @@ export default function ProductItem() {
                 </Link>
                 <button
                   onClick={() => postToCart(product.id)}
-                  className="btn bg-main text-main-light w-100 btn-sm"
+                  className="btn bg-main text-light w-100 btn-sm"
                 >
                   Add To Cart
                 </button>
