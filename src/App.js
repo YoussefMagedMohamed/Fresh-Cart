@@ -13,6 +13,8 @@ import { UserContext } from "./Context/UserContext/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import { Toaster } from "react-hot-toast";
+import ShippingAddress from "./Components/ShippingAddress/ShippingAddress";
+import AllOrders from "./Components/AllOrders/AllOrders";
 
 function App() {
   let routers = createBrowserRouter([
@@ -31,11 +33,29 @@ function App() {
           ),
         },
         {
+          path: "allorders",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <AllOrders />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: "products",
           element: (
             <ProtectedRoute>
               {" "}
               <Products />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "shippingaddress/:id",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <ShippingAddress />{" "}
             </ProtectedRoute>
           ),
         },

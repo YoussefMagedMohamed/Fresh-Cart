@@ -8,6 +8,17 @@ export default function CartContextProvider(props) {
     token: localStorage.getItem("userToken"),
   };
 
+  function checkOutSession(cartId, shippingAddress) {
+    return axios
+      .post(
+        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000`,
+        { shippingAddress },
+        { headers }
+      )
+      .then((response) => response)
+      .catch((err) => err);
+  }
+
   function addToCart(productId) {
     return axios
       .post(
@@ -35,7 +46,7 @@ export default function CartContextProvider(props) {
       .catch((err) => err);
   }
 
-  function updateItem(productId , count) {
+  function updateItem(productId, count) {
     return axios
       .put(
         `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
@@ -52,7 +63,13 @@ export default function CartContextProvider(props) {
 
   return (
     <CartContext.Provider
-      value={{ addToCart, getCartItems, removeItem, updateItem }}
+      value={{
+        addToCart,
+        getCartItems,
+        removeItem,
+        updateItem,
+        checkOutSession,
+      }}
     >
       {props.children}
     </CartContext.Provider>

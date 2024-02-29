@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../Context/CartContext/CartContext";
 import { Bars } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   let { getCartItems, removeItem, updateItem } = useContext(CartContext);
@@ -54,6 +55,7 @@ export default function Cart() {
             />
           </div>
         ) : (
+          cartItems?
           <>
             <p className="text-main">
               Number OF Items : {cartItems.numOfCartItems}
@@ -117,9 +119,12 @@ export default function Cart() {
                 </div>
               </div>
             ))}
+            <Link to={`/shippingaddress/${cartItems.data._id}`} className="btn bg-main text-light m-4">Online Payment</Link>
           </>
+          : <h2>Your Cart is Empty...</h2>
         )}
       </div>
     </>
+    
   );
 }
